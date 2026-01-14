@@ -60,6 +60,16 @@ const Index = () => {
 
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Button size="lg" asChild>
+                <a
+                  href="https://fezvrasta.github.io/cafe-hass"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Play className="h-5 w-5 mr-2" />
+                  Try It Now
+                </a>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
                 <a href="#install">
                   <Download className="h-5 w-5 mr-2" />
                   Install via HACS
