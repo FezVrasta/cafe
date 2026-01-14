@@ -186,3 +186,7 @@
     100% { stroke-dashoffset: 0; }
   }
 }
+
+.react-flow {
+  pointer-events: none;
+}
