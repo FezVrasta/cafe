@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   ReactFlow,
   Background,
@@ -8,6 +8,8 @@ import {
   Edge,
   ConnectionLineType,
   MarkerType,
+  Handle,
+  Position,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { motion } from 'framer-motion';
@@ -22,27 +24,33 @@ const nodeStyle = (color: string) => ({
   minWidth: '140px',
 });
 
-const CustomNode = ({ data }: { data: { label: string; icon: React.ReactNode; color: string; subLabel?: string } }) => (
-  <motion.div
-    initial={{ scale: 0.8, opacity: 0 }}
-    animate={{ scale: 1, opacity: 1 }}
-    transition={{ duration: 0.5 }}
-    style={nodeStyle(data.color)}
-    className="flex items-center gap-2"
-  >
-    <div className="flex-shrink-0">{data.icon}</div>
-    <div>
-      <div className="font-semibold text-sm" style={{ color: data.color === '#FBBF24' || data.color === '#22C55E' ? '#0a0f1a' : '#fff' }}>
-        {data.label}
-      </div>
-      {data.subLabel && (
-        <div className="text-xs opacity-70" style={{ color: data.color === '#FBBF24' || data.color === '#22C55E' ? '#0a0f1a' : '#fff' }}>
-          {data.subLabel}
+const CustomNode = ({ data }: { data: { label: string; icon: React.ReactNode; color: string; subLabel?: string } }) => {
+  const textColor = data.color === '#FBBF24' || data.color === '#22C55E' ? '#0a0f1a' : '#fff';
+  
+  return (
+    <motion.div
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      style={nodeStyle(data.color)}
+      className="relative flex items-center gap-2"
+    >
+      <Handle type="target" position={Position.Left} className="!bg-white/50 !border-0 !w-2 !h-2" />
+      <div className="flex-shrink-0">{data.icon}</div>
+      <div>
+        <div className="font-semibold text-sm" style={{ color: textColor }}>
+          {data.label}
         </div>
-      )}
-    </div>
-  </motion.div>
-);
+        {data.subLabel && (
+          <div className="text-xs opacity-70" style={{ color: textColor }}>
+            {data.subLabel}
+          </div>
+        )}
+      </div>
+      <Handle type="source" position={Position.Right} className="!bg-white/50 !border-0 !w-2 !h-2" />
+    </motion.div>
+  );
+};
 
 const nodeTypes = {
   custom: CustomNode,
