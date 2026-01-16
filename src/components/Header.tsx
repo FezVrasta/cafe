@@ -15,7 +15,7 @@ export const Header = () => {
       className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl"
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link to="/cafe" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+        <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           <Coffee className="h-7 w-7 text-primary" />
           <span className="text-xl font-bold tracking-tight">C.A.F.E.</span>
         </Link>
@@ -33,7 +33,7 @@ export const Header = () => {
               <a href="#how-it-works" className="hover:text-foreground transition-colors">How It Works</a>
             </>
           )}
-          <Link to="/cafe/docs" className="hover:text-foreground transition-colors flex items-center gap-1">
+          <Link to="/docs" className="hover:text-foreground transition-colors flex items-center gap-1">
             <BookOpen className="h-4 w-4" />
             Docs
           </Link>
@@ -46,7 +46,7 @@ export const Header = () => {
             </a>
           </Button>
           <Button size="sm" asChild>
-            <a href={isDocsPage ? "/cafe#install" : "#install"}>
+            <a href={isDocsPage ? "/#install" : "#install"}>
               Get Started
               <ExternalLink className="h-4 w-4 ml-2" />
             </a>
