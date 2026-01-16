@@ -14,6 +14,9 @@ import {
   Layers,
   ExternalLink,
   Github,
+  Check,
+  X,
+  Minus,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/Header';
@@ -225,6 +228,130 @@ action:
         </div>
       </section>
 
+      {/* Comparison Section */}
+      <section id="compare" className="py-20 border-t border-border/30">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              How Does C.A.F.E. Compare?
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              See how C.A.F.E. stacks up against other Home Assistant automation solutions.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-5xl mx-auto overflow-x-auto"
+          >
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b border-border/50">
+                  <th className="text-left py-4 px-4 font-semibold text-foreground">Feature</th>
+                  <th className="text-center py-4 px-4 font-semibold text-muted-foreground">
+                    <div className="flex flex-col items-center gap-1">
+                      <span>Built-In Editor</span>
+                      <span className="text-xs font-normal opacity-70">Home Assistant</span>
+                    </div>
+                  </th>
+                  <th className="text-center py-4 px-4 font-semibold text-muted-foreground">
+                    <div className="flex flex-col items-center gap-1">
+                      <span>Node-RED</span>
+                      <span className="text-xs font-normal opacity-70">Add-on</span>
+                    </div>
+                  </th>
+                  <th className="text-center py-4 px-4 font-semibold text-primary">
+                    <div className="flex flex-col items-center gap-1">
+                      <Coffee className="h-5 w-5" />
+                      <span>C.A.F.E.</span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="text-sm">
+                <ComparisonRow
+                  feature="Visual Flow Editing"
+                  builtin={false}
+                  nodeRed={true}
+                  cafe={true}
+                />
+                <ComparisonRow
+                  feature="Native YAML Output"
+                  builtin={true}
+                  nodeRed={false}
+                  cafe={true}
+                />
+                <ComparisonRow
+                  feature="No External Engine Required"
+                  builtin={true}
+                  nodeRed={false}
+                  cafe={true}
+                />
+                <ComparisonRow
+                  feature="Complex Loops & Branches"
+                  builtin="partial"
+                  nodeRed={true}
+                  cafe={true}
+                />
+                <ComparisonRow
+                  feature="Cross-Branch Connections"
+                  builtin={false}
+                  nodeRed={true}
+                  cafe={true}
+                />
+                <ComparisonRow
+                  feature="Import Existing Automations"
+                  builtin={true}
+                  nodeRed={false}
+                  cafe={true}
+                />
+                <ComparisonRow
+                  feature="Zero Resource Overhead"
+                  builtin={true}
+                  nodeRed={false}
+                  cafe={true}
+                />
+                <ComparisonRow
+                  feature="Works After Uninstall"
+                  builtin={true}
+                  nodeRed={false}
+                  cafe={true}
+                />
+                <ComparisonRow
+                  feature="HA Trace View Integration"
+                  builtin={true}
+                  nodeRed={false}
+                  cafe={true}
+                />
+                <ComparisonRow
+                  feature="JavaScript/Custom Functions"
+                  builtin={false}
+                  nodeRed={true}
+                  cafe={false}
+                />
+              </tbody>
+            </table>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center text-xs text-muted-foreground mt-6 max-w-2xl mx-auto"
+          >
+            Node-RED excels for advanced users who need JavaScript and custom integrations. 
+            C.A.F.E. is ideal for those who want visual editing with native HA compatibility.
+          </motion.p>
+        </div>
+      </section>
+
       {/* Installation Section */}
       <section id="install" className="py-20 border-t border-border/30">
         <div className="container mx-auto px-4">
@@ -308,6 +435,37 @@ action:
 
       <Footer />
     </div>
+  );
+};
+
+const ComparisonRow = ({
+  feature,
+  builtin,
+  nodeRed,
+  cafe,
+}: {
+  feature: string;
+  builtin: boolean | 'partial';
+  nodeRed: boolean | 'partial';
+  cafe: boolean | 'partial';
+}) => {
+  const renderCell = (value: boolean | 'partial') => {
+    if (value === true) {
+      return <Check className="h-5 w-5 text-node-action mx-auto" />;
+    }
+    if (value === 'partial') {
+      return <Minus className="h-5 w-5 text-node-trigger mx-auto" />;
+    }
+    return <X className="h-5 w-5 text-muted-foreground/40 mx-auto" />;
+  };
+
+  return (
+    <tr className="border-b border-border/30 hover:bg-card/50 transition-colors">
+      <td className="py-3 px-4 text-foreground">{feature}</td>
+      <td className="py-3 px-4 text-center">{renderCell(builtin)}</td>
+      <td className="py-3 px-4 text-center">{renderCell(nodeRed)}</td>
+      <td className="py-3 px-4 text-center bg-primary/5">{renderCell(cafe)}</td>
+    </tr>
   );
 };
 
