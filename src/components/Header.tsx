@@ -1,11 +1,37 @@
 import { motion } from 'framer-motion';
 import { Coffee, Github, ExternalLink, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+const scrollToSection = (id: string) => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
+const SectionLink = ({ id, children }: { id: string; children: React.ReactNode }) => (
+  <button
+    onClick={() => scrollToSection(id)}
+    className="hover:text-foreground transition-colors"
+  >
+    {children}
+  </button>
+);
 
 export const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isDocsPage = location.pathname.includes('/docs');
+
+  const handleGetStarted = () => {
+    if (isDocsPage) {
+      navigate('/');
+      setTimeout(() => scrollToSection('install'), 100);
+    } else {
+      scrollToSection('install');
+    }
+  };
 
   return (
     <motion.header
@@ -22,15 +48,15 @@ export const Header = () => {
         <nav className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
           {isDocsPage ? (
             <>
-              <a href="#overview" className="hover:text-foreground transition-colors">Overview</a>
-              <a href="#installation" className="hover:text-foreground transition-colors">Install</a>
-              <a href="#faq" className="hover:text-foreground transition-colors">FAQ</a>
+              <SectionLink id="overview">Overview</SectionLink>
+              <SectionLink id="installation">Install</SectionLink>
+              <SectionLink id="faq">FAQ</SectionLink>
             </>
           ) : (
             <>
-              <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-              <a href="#install" className="hover:text-foreground transition-colors">Install</a>
-              <a href="#how-it-works" className="hover:text-foreground transition-colors">How It Works</a>
+              <SectionLink id="features">Features</SectionLink>
+              <SectionLink id="install">Install</SectionLink>
+              <SectionLink id="how-it-works">How It Works</SectionLink>
             </>
           )}
           <Link to="/docs" className="hover:text-foreground transition-colors flex items-center gap-1">
@@ -45,11 +71,9 @@ export const Header = () => {
               GitHub
             </a>
           </Button>
-          <Button size="sm" asChild>
-            <a href={isDocsPage ? "/#install" : "#install"}>
-              Get Started
-              <ExternalLink className="h-4 w-4 ml-2" />
-            </a>
+          <Button size="sm" onClick={handleGetStarted}>
+            Get Started
+            <ExternalLink className="h-4 w-4 ml-2" />
           </Button>
         </div>
       </div>

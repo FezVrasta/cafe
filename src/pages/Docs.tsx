@@ -446,6 +446,13 @@ action:
 
 // Helper Components
 
+const scrollToSection = (id: string) => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
 const TocLink = ({
   href,
   icon,
@@ -455,16 +462,16 @@ const TocLink = ({
   icon: React.ReactNode;
   title: string;
 }) => (
-  <a
-    href={href}
-    className="flex items-center gap-3 rounded-lg border border-border/50 bg-card/50 p-4 hover:bg-card hover:border-primary/30 transition-colors group"
+  <button
+    onClick={() => scrollToSection(href.replace('#', ''))}
+    className="flex items-center gap-3 rounded-lg border border-border/50 bg-card/50 p-4 hover:bg-card hover:border-primary/30 transition-colors group text-left w-full"
   >
     <span className="text-primary">{icon}</span>
     <span className="font-medium text-foreground group-hover:text-primary transition-colors">
       {title}
     </span>
     <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto group-hover:text-primary transition-colors" />
-  </a>
+  </button>
 );
 
 const DocSection = ({
