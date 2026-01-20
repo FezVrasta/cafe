@@ -72,11 +72,9 @@ const Index = () => {
                   Try It Now
                 </a>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <a href="#install">
-                  <Download className="h-5 w-5 mr-2" />
-                  Install via HACS
-                </a>
+              <Button size="lg" variant="outline" onClick={() => document.getElementById('install')?.scrollIntoView({ behavior: 'smooth' })}>
+                <Download className="h-5 w-5 mr-2" />
+                Install via HACS
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <a
